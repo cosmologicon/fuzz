@@ -4,7 +4,7 @@ A frivolous, easily seedable PRNG library in Python
 ## Quick usage
 
     import fuzz
-    print(fuzz.fuzz(1234))
+    print(fuzz.random(1234))
 
 ## To install
 
@@ -19,20 +19,25 @@ again by providing the same input. It's similar to using the `random` module and
 `random.seed` before every call to a method.
 
 There aren't really any great reasons to do this. However it's sometimes convenient when you have a
-random effect that you don't want to maintain state for, or for coherent noise generation.
+random effect that you don't want to maintain state for, or for coherent noise generation. See
+`example_game.py` for a demonstration.
 
-## The `fuzz` method
+## The `random` method
 
-`fuzz.fuzz(*args)`: produce a number in the range [0, 1) that is deterministically calculated from
+`fuzz.random(*seed)`: produce a number in the range [0, 1) that is deterministically calculated from
 any number of numerical arguments. The result can be treated as a low-quality pseudorandom number,
-using the arguments as a seed. Differences in the arguments smaller than 1e-6 may result in
-correlations. That is, `maff.fuzz(x)` may be close or equal to `maff.fuzz(x + 1e-7)`.
+using the arguments as a seed.
 
 ## Other methods
 
-In general, the other methods of the `fuzz` module take 
+In general, the other methods of the `fuzz` module act like their counterparts in the `random`
+module, but they take any additional number of numerical arguments.
 
-`fuzz.fuzzrange(a, b, *args)`: produce a number in the range [a, b). Equivalent to:
-`maff.mix(a, b, maff.fuzz(*args))`.
+`fuzz.uniform(a, b, *seed)`: produce a number in the range [a, b).
+
+## Randomness quality
+
+Differences in the arguments smaller than 1e-6 may result in correlations. That is, `fuzz.random(x)`
+may be close or equal to `fuzz.random(x + 1e-7)`.
 
 
